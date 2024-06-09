@@ -1,1 +1,4 @@
 # Yeild Farming
+Yield farming is a method used in DeFi (Decentralized Finance) where users can lend their assets to earn rewards. In this context, we are focusing on a type of yield farming known as liquidity mining. Liquidity providers (users who supply assets to a liquidity pool) are rewarded with tokens. These tokens can then be sold for profit or used within the ecosystem.
+
+In this we will create a smart contract for Yield Farming using an ERC20 token. Each Liquidity Pool has a unique reward rate and reward providing time. Additionally, the contract will also track "whale" wallets. A whale wallet is defined as any wallet that has deposited more than 10,000 Wei at any point in time. Whale wallets are provided an additional 20% reward only when he/she claims their reward.
