@@ -1,0 +1,36 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Lock.sol": {
+      "content": "// SPDX-License-Identifier: UNLICENSED\r\npragma solidity >=0.8.9;\r\n\r\nerror InvalidUnlockTime(uint256 unlockTime);\r\nerror NotOwner(address owner);\r\nerror UnlockTimeNotReached(uint256 unlockTime);\r\n\r\ncontract Lock {\r\n    uint256 public unlockTime;\r\n    address payable public owner;\r\n\r\n    event Withdrawal(uint256 amount, uint256 when);\r\n\r\n    constructor(uint256 _unlockTime) payable {\r\n        if (block.timestamp >= _unlockTime) {\r\n            revert InvalidUnlockTime(_unlockTime);\r\n        }\r\n\r\n        unlockTime = _unlockTime;\r\n        owner = payable(msg.sender);\r\n    }\r\n\r\n    function withdraw() public {\r\n        if (block.timestamp < unlockTime) {\r\n            revert UnlockTimeNotReached(unlockTime);\r\n        }\r\n\r\n        if (msg.sender != owner) {\r\n            revert NotOwner(owner);\r\n        }\r\n\r\n        emit Withdrawal(address(this).balance, block.timestamp);\r\n\r\n        owner.transfer(address(this).balance);\r\n    }\r\n}\r\n"
+    }
+  },
+  "settings": {
+    "metadata": {
+      "bytecodeHash": "none",
+      "useLiteralContent": true
+    },
+    "optimizer": {
+      "enabled": true,
+      "runs": 800
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    }
+  }
+}
