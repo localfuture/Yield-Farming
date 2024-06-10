@@ -7,6 +7,20 @@ contract YieldFarming is ERC20{
 
     address public owner;
 
+    uint pId;
+    struct Pool {
+        uint maxAmount;
+        uint yeildPercent;
+        uint minDeposit;
+        uint rewardTime;
+    }
+    mapping (uint => Pool) pools;
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call this function");
+        _;
+    }
+
     constructor(string memory name, string memory symbol, uint8 decimals) ERC20(name, symbol) {
         owner = msg.sender;
         // Mint 100 tokens to msg.sender
@@ -22,7 +36,10 @@ contract YieldFarming is ERC20{
     // @params minDeposit: The minimum amount of Wei that must be deposited into the pool.
     // @params rewardTime: The time interval in seconds at which rewards are provided. 
                         //  After every rewardTime, the user will receive their share of rewards.
-    function addPool(uint maxAmount, uint yieldPercent, uint minDeposit, uint rewardTime) public {}
+    function addPool(uint maxAmount, uint yieldPercent, uint minDeposit, uint rewardTime) public onlyOwner {
+        require(minDeposit < maxAmount, "min should be less than max");
+        pools[pId] = Pool(maxAmount, yieldPercent, minDeposit, rewardTime);
+    }
 
     // @dev Allows anyone to deposit Wei into a specific liquidity pool. 
     //      The function checks if the yield farming is active, 
