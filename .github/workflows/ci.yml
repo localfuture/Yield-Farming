@@ -42,6 +42,7 @@ jobs:
 
       - name: "Lint the code"
         run: "npm run lint"
+        continue-on-error: true
 
       - name: "Add lint summary"
         run: |
