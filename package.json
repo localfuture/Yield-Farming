@@ -62,6 +62,7 @@
     "coverage": "hardhat coverage --solcoverjs ./.solcover.js --temp artifacts --testfiles \"test/**/*.ts\" && bun run typechain",
     "deploy:contracts": "hardhat deploy",
     "lint": "bun run lint:sol && bun run lint:ts && bun run prettier:check",
+    "lint2": "npm run lint:sol && npm run lint:Ts && npm run prettier:check",
     "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
     "lint:ts": "eslint --ignore-path ./.eslintignore --ext .js,.ts .",
     "postcompile": "bun run typechain",
