@@ -31,14 +31,17 @@ jobs:
       - name: "Check out the repo"
         uses: "actions/checkout@v4"
 
-      - name: "Install Bun"
-        uses: "oven-sh/setup-bun@v1"
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16.13.x
+          cache: npm
 
-      - name: "Install the dependencies"
-        run: "bun install"
+      - name: Install
+        run: npm install
 
       - name: "Lint the code"
-        run: "bun run lint"
+        run: "npm run lint"
 
       - name: "Add lint summary"
         run: |
@@ -46,10 +49,10 @@ jobs:
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
 
       - name: "Compile the contracts and generate the TypeChain bindings"
-        run: "bun run typechain"
+        run: "npm run typechain"
 
       - name: "Test the contracts and generate the coverage report"
-        run: "bun run coverage"
+        run: "npm run coverage"
 
       - name: "Add test summary"
         run: |
